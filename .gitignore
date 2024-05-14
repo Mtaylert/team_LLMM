@@ -1,0 +1,33 @@
+app.env
+
+
+atmos/tmp/*
+atmos.log
+
+# VS Code IDE Files
+.classpath
+.project
+.factorypath
+.vscode/
+.settings/
+
+# Pycharm
+.idea
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Python files
+**.pyc
+.venv/**
+.env/**
+atmos/atmos.log
+
+# Data
+**/wizard_of_wikipedia/
+
+# OSX
+.DS_Store
+
+.joblib
+.python-version
