@@ -3,7 +3,6 @@ import uvicorn
 from app.schemas import LLMInput
 from openai import OpenAI
 from dotenv import load_dotenv
-import os
 
 # Load environment variables from .env file
 load_dotenv()
@@ -12,7 +11,7 @@ load_dotenv()
 app = FastAPI(title="team-llmm")
 
 # Initialize OpenAI client with API key from environment variable
-client = OpenAI(api_key='key')
+client = OpenAI(api_key='')
 
 
 def create_app() -> FastAPI:
@@ -38,12 +37,44 @@ async def hello():
     return "Hello team llmm"
 
 
+def scraper():
+    pass
+
+
+def dynamic_chunking():
+    return ""
+
+
+def semantic_chunking():
+    return ""
+
+
+def basic_chunking():
+    return ""
+
+
 @app.post("/question-answering")
 async def question_answering(input_request: LLMInput):
+
+
+    if input_request.chunking_type == 'dynamic_chunking':
+        chunk = dynamic_chunking()
+    elif input_request.chunking_type == 'semantic_chunking':
+        chunk = semantic_chunking()
+    elif input_request.chunking_type == 'basic_chunking':
+        chunk = basic_chunking()
+
+    prompt = f"""You are a helpful assistant. Use the content provided to answer the inquiries
+    
+    CONTENT:
+    
+    {chunk}
+    """
+
     openai_response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "system", "content": prompt},
             {"role": "user", "content": input_request.input_question},
         ]
     )
